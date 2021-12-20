@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -86,9 +87,18 @@ func main() {
 		fmt.Println("Message: ", message.Content, "Sender: ", message.UserID)
 	}
 
-	// doError(db)
+	doError(db)
 }
 
-// func doError(db *gorm.DB) {
-// 	panic(db)
-// }
+func doError(db *gorm.DB) {
+	var fred User
+
+	if err := db.Where("username = ?", "Fred").First(&fred).Error; err != nil {
+		log.Fatalf("Error when loading User: %s", err)
+	}
+
+	// result := db.Where("username = ?", "Fred").First(&fred)
+	// if result.Error != nil {
+	// 	log.Fatalf("Error when loading User: %s", result.Error)
+	// }
+}
