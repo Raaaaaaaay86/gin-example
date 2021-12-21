@@ -2,6 +2,7 @@ package api
 
 import (
 	user_service "example/gorm-practice/service/user"
+	"example/gorm-practice/utils/custom_response"
 	"net/http"
 	"strconv"
 
@@ -11,9 +12,10 @@ import (
 func GetAllUser(c *gin.Context) {
 	c.JSON(
 		http.StatusOK,
-		gin.H{
-			"data": user_service.GetAllUser(),
-		},
+		custom_response.Build(
+			user_service.GetAllUser(),
+			"ok",
+		),
 	)
 }
 
@@ -27,9 +29,10 @@ func CreateUser(c *gin.Context) {
 
 	c.JSON(
 		http.StatusOK,
-		gin.H{
-			"data": user_service.CreateUser(requestBody.Username, requestBody.Email),
-		},
+		custom_response.Build(
+			user_service.CreateUser(requestBody.Username, requestBody.Email),
+			"ok",
+		),
 	)
 }
 

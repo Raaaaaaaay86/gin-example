@@ -1,13 +1,23 @@
 package model
 
 import (
+	"errors"
 	"fmt"
+
+	"gorm.io/gorm"
 )
 
 type User struct {
 	Model
 	Email    string `json:"email"`
 	Username string `json:"username"`
+}
+
+func (user *User) BeforeCreate(tx *gorm.DB) (err error) {
+	if user.Username == "admin" {
+		return errors.New("invalid username")
+	}
+	return
 }
 
 func GetAllUser() []*User {

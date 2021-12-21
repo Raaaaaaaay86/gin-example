@@ -23,3 +23,7 @@ func Setup() {
 		panic("can't connect to database")
 	}
 }
+
+func GetDB() *gorm.DB {
+	return db
+}
